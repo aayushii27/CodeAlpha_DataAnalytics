@@ -1,0 +1,35 @@
+import pandas as pd
+from textblob import TextBlob
+
+# Sample text dataset
+data = {
+    "Review": [
+        "This product is amazing and works perfectly",
+        "Worst experience ever, very disappointed",
+        "Average quality, nothing special",
+        "Excellent service and fast delivery",
+        "Not good, waste of money"
+    ]
+}
+
+df = pd.DataFrame(data)
+
+# Sentiment function
+def analyze_sentiment(text):
+    polarity = TextBlob(text).sentiment.polarity
+    if polarity > 0:
+        return "Positive"
+    elif polarity < 0:
+        return "Negative"
+    else:
+        return "Neutral"
+
+# Apply sentiment analysis
+df["Sentiment"] = df["Review"].apply(analyze_sentiment)
+
+# Display results
+print(df)
+
+# Sentiment count
+print("\nSentiment Distribution:")
+print(df["Sentiment"].value_counts())
