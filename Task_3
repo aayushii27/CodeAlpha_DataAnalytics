@@ -1,0 +1,33 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load dataset
+df = pd.read_csv("books_dataset.csv")
+
+# Clean price column
+df["Price"] = df["Price"].str.replace("£", "", regex=False).astype(float)
+
+# Average price per rating
+avg_price = df.groupby("Rating")["Price"].mean()
+
+# Bar chart: Average price by rating
+plt.figure()
+avg_price.plot(kind="bar")
+plt.title("Average Book Price by Rating")
+plt.xlabel("Rating")
+plt.ylabel("Average Price (£)")
+plt.show()
+
+# Box plot: Price distribution
+plt.figure()
+sns.boxplot(y=df["Price"])
+plt.title("Price Distribution (Outliers)")
+plt.show()
+
+# Pie chart: Rating distribution
+plt.figure()
+df["Rating"].value_counts().plot(kind="pie", autopct="%1.1f%%")
+plt.title("Rating Distribution")
+plt.ylabel("")
+plt.show()
