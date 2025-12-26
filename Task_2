@@ -1,0 +1,46 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load dataset
+df = pd.read_csv("books_dataset.csv")
+
+# Display first 5 rows
+print("First 5 rows of dataset:")
+print(df.head())
+
+# Dataset information
+print("\nDataset Info:")
+print(df.info())
+
+# Check missing values
+print("\nMissing Values:")
+print(df.isnull().sum())
+
+# Convert price column
+df['Price']= (
+    df['Price']
+    .astype(str)
+    .str.replace('£', '', regex=False)
+    .str.strip()
+)
+
+# Basic statistics
+print("\nStatistical Summary:")
+print(df.describe())
+
+# Value counts of ratings
+print("\nRating Distribution:")
+print(df["Rating"].value_counts())
+
+# Visualization: Price Distribution
+plt.figure()
+sns.histplot(df["Price"], kde=True)
+plt.title("Price Distribution")
+plt.show()
+
+# Visualization: Ratings count
+plt.figure()
+sns.countplot(x="Rating", data=df)
+plt.title("Book Ratings Count")
+plt.show()
